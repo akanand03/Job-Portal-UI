@@ -1,19 +1,82 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import jobs from "../data/jobs.json"; // ← JSON import as required
+// // Sample jobs data since we can't import JSON in this environment
+// const jobs = [
+//   {
+//     id: 1,
+//     title: "Senior Frontend Developer",
+//     company: "TechCorp",
+//     location: "San Francisco, CA",
+//     type: "Full-Time",
+//     salary: "$120k - $180k",
+//     postedTime: "2 days ago",
+//     featured: true,
+//     companyLogo: "https://ui-avatars.com/api/?name=TechCorp&background=3b82f6&color=ffffff&size=56&rounded=true",
+//     skills: ["React", "TypeScript", "Next.js", "Tailwind CSS"]
+//   },
+//   {
+//     id: 2,
+//     title: "UX/UI Designer",
+//     company: "DesignStudio",
+//     location: "New York, NY",
+//     type: "Full-Time",
+//     salary: "$90k - $130k",
+//     postedTime: "1 day ago",
+//     featured: false,
+//     companyLogo: "https://ui-avatars.com/api/?name=DesignStudio&background=10b981&color=ffffff&size=56&rounded=true",
+//     skills: ["Figma", "Adobe XD", "Prototyping", "User Research"]
+//   },
+//   {
+//     id: 3,
+//     title: "Backend Engineer",
+//     company: "DataFlow",
+//     location: "Remote",
+//     type: "Contract",
+//     salary: "$80k - $120k",
+//     postedTime: "3 days ago",
+//     featured: true,
+//     companyLogo: "https://ui-avatars.com/api/?name=DataFlow&background=f59e0b&color=ffffff&size=56&rounded=true",
+//     skills: ["Node.js", "Python", "AWS", "MongoDB"]
+//   },
+//   {
+//     id: 4,
+//     title: "Product Manager",
+//     company: "InnovateLab",
+//     location: "Austin, TX",
+//     type: "Part-Time",
+//     salary: "$60k - $90k",
+//     postedTime: "1 week ago",
+//     featured: false,
+//     companyLogo: "https://ui-avatars.com/api/?name=InnovateLab&background=8b5cf6&color=ffffff&size=56&rounded=true",
+//     skills: ["Strategy", "Analytics", "Agile", "Leadership"]
+//   }
+// ];
 
 const FeaturedJobs = () => {
   const [savedJobs, setSavedJobs] = useState(new Set());
+  const [notification, setNotification] = useState({ show: false, message: '', type: '' });
 
-  const toggleSaveJob = (jobId) => {
+  const toggleSaveJob = (jobId, jobTitle) => {
     setSavedJobs(prev => {
       const newSaved = new Set(prev);
-      if (newSaved.has(jobId)) {
+      const isCurrentlySaved = newSaved.has(jobId);
+      
+      if (isCurrentlySaved) {
         newSaved.delete(jobId);
+        showNotification(`Removed "${jobTitle}" from saved jobs`, 'removed');
       } else {
         newSaved.add(jobId);
+        showNotification(`Saved "${jobTitle}" to your favorites!`, 'saved');
       }
       return newSaved;
     });
+  };
+
+  const showNotification = (message, type) => {
+    setNotification({ show: true, message, type });
+    setTimeout(() => {
+      setNotification({ show: false, message: '', type: '' });
+    }, 3000);
   };
 
   const getJobTypeIcon = (type) => {
@@ -139,7 +202,7 @@ const FeaturedJobs = () => {
     .featured-badge {
       position: absolute;
       top: 16px;
-      right: 16px;
+      left: 16px;
       background: linear-gradient(135deg, #2563eb, #7c3aed);
       color: white;
       padding: 4px 12px;
@@ -148,6 +211,7 @@ const FeaturedJobs = () => {
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.5px;
+      z-index: 10;
     }
     
     .job-header {
@@ -221,30 +285,135 @@ const FeaturedJobs = () => {
       flex-shrink: 0;
     }
     
+    /* ENHANCED: Heart icon brought to the VERY front with maximum z-index */
     .save-button {
-      background: transparent;
-      border: none;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(15px);
+      border: 2px solid #e5e7eb;
       cursor: pointer;
-      padding: 8px;
-      border-radius: 8px;
-      transition: all 0.2s ease;
+      padding: 12px;
+      border-radius: 16px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       color: #9ca3af;
       flex-shrink: 0;
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      z-index: 9999;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      transform: translateZ(0);
+      isolation: isolate;
     }
     
     .save-button:hover {
-      background: #fef2f2;
+      background: rgba(255, 242, 242, 0.98);
+      border-color: #fecaca;
       color: #ef4444;
+      transform: scale(1.15) translateZ(0);
+      box-shadow: 0 12px 32px rgba(239, 68, 68, 0.4);
+      z-index: 10000;
     }
     
     .save-button.saved {
       color: #ef4444;
-      background: #fef2f2;
+      background: rgba(255, 242, 242, 0.98);
+      border-color: #fecaca;
+      animation: heartPulse 0.6s ease-in-out;
+      z-index: 10000;
+    }
+
+    @keyframes heartPulse {
+      0% { transform: scale(1) translateZ(0); }
+      30% { transform: scale(1.3) translateZ(0); }
+      60% { transform: scale(1.1) translateZ(0); }
+      100% { transform: scale(1) translateZ(0); }
     }
     
     .save-icon {
-      width: 20px;
-      height: 20px;
+      width: 24px;
+      height: 24px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    }
+
+    .save-button:hover .save-icon {
+      transform: scale(1.1);
+      filter: drop-shadow(0 4px 8px rgba(239, 68, 68, 0.3));
+    }
+
+    .save-button.saved .save-icon {
+      filter: drop-shadow(0 4px 8px rgba(239, 68, 68, 0.4));
+    }
+
+    /* Ensure heart stays on top of everything */
+    .save-button::before {
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      right: -5px;
+      bottom: -5px;
+      z-index: -1;
+      border-radius: 20px;
+    }
+
+    /* NOTIFICATION SYSTEM */
+    .notification {
+      position: fixed;
+      top: 100px;
+      right: 24px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 16px;
+      padding: 16px 24px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+      border: 1px solid #e5e7eb;
+      z-index: 1000;
+      transform: translateX(400px);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      max-width: 320px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .notification.show {
+      transform: translateX(0);
+    }
+
+    .notification.saved {
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.05);
+    }
+
+    .notification.removed {
+      border-color: #ef4444;
+      background: rgba(239, 68, 68, 0.05);
+    }
+
+    .notification-icon {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+
+    .notification.saved .notification-icon {
+      color: #10b981;
+    }
+
+    .notification.removed .notification-icon {
+      color: #ef4444;
+    }
+
+    .notification-message {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1f2937;
+      line-height: 1.4;
+    }
+    
+    .job-content {
+      margin-top: 16px;
     }
     
     .job-meta {
@@ -433,14 +602,38 @@ const FeaturedJobs = () => {
         flex-direction: column;
       }
       
-      .job-header {
-        flex-direction: column;
-        align-items: flex-start;
+      .featured-badge {
+        top: 12px;
+        left: 12px;
+        padding: 3px 10px;
+        font-size: 11px;
       }
       
       .save-button {
-        align-self: flex-end;
-        margin-top: -40px;
+        top: 6px;
+        right: 6px;
+        padding: 10px;
+        z-index: 9999;
+      }
+      
+      .save-icon {
+        width: 22px;
+        height: 22px;
+      }
+      
+      .job-content {
+        margin-top: 20px;
+      }
+
+      .notification {
+        right: 16px;
+        top: 80px;
+        max-width: 280px;
+        padding: 12px 16px;
+      }
+
+      .notification-message {
+        font-size: 13px;
       }
     }
     
@@ -458,6 +651,25 @@ const FeaturedJobs = () => {
       .skill-tag {
         padding: 4px 8px;
       }
+      
+      .featured-badge {
+        top: 10px;
+        left: 10px;
+        padding: 2px 8px;
+        font-size: 10px;
+      }
+      
+      .save-button {
+        top: 6px;
+        right: 6px;
+        padding: 8px;
+        z-index: 9999;
+      }
+      
+      .save-icon {
+        width: 20px;
+        height: 20px;
+      }
     }
   `;
 
@@ -466,6 +678,22 @@ const FeaturedJobs = () => {
       <style>{styles}</style>
       
       <section className="featured-jobs-section">
+        {/* NOTIFICATION SYSTEM */}
+        <div className={`notification ${notification.show ? 'show' : ''} ${notification.type}`}>
+          <div className="notification-icon">
+            {notification.type === 'saved' ? (
+              <svg fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+              </svg>
+            ) : (
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+            )}
+          </div>
+          <div className="notification-message">{notification.message}</div>
+        </div>
+
         <div className="container">
           {/* Section Header */}
           <div className="section-header">
@@ -486,73 +714,76 @@ const FeaturedJobs = () => {
                   <div className="featured-badge">Featured</div>
                 )}
                 
-                {/* Job Header */}
-                <div className="job-header">
-                  <div className="job-info">
-                    <img 
-                      src={job.companyLogo} 
-                      alt={`${job.company} logo`} 
-                      className="company-logo"
-                      onError={(e) => {
-                        e.target.src = `https://ui-avatars.com/api/?name=${job.company}&background=3b82f6&color=ffffff&size=56&rounded=true`;
-                      }}
-                    />
-                    <div className="job-details">
-                      <h3 className="job-title">{job.title}</h3>
-                      <p className="company-name">{job.company}</p>
-                      <div className="job-location">
-                        <svg className="location-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                        <span>{job.location}</span>
+                {/* HEART ICON IN THE FRONT */}
+                <button 
+                  className={`save-button ${savedJobs.has(job.id) ? 'saved' : ''}`}
+                  onClick={() => toggleSaveJob(job.id, job.title)}
+                  aria-label={savedJobs.has(job.id) ? 'Remove from saved jobs' : 'Save job'}
+                >
+                  <svg className="save-icon" fill={savedJobs.has(job.id) ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  </svg>
+                </button>
+
+                <div className="job-content">
+                  {/* Job Header */}
+                  <div className="job-header">
+                    <div className="job-info">
+                      <img 
+                        src={job.companyLogo} 
+                        alt={`${job.company} logo`} 
+                        className="company-logo"
+                        onError={(e) => {
+                          e.target.src = `https://ui-avatars.com/api/?name=${job.company}&background=3b82f6&color=ffffff&size=56&rounded=true`;
+                        }}
+                      />
+                      <div className="job-details">
+                        <h3 className="job-title">{job.title}</h3>
+                        <p className="company-name">{job.company}</p>
+                        <div className="job-location">
+                          <svg className="location-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                          </svg>
+                          <span>{job.location}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                  
-                  <button 
-                    className={`save-button ${savedJobs.has(job.id) ? 'saved' : ''}`}
-                    onClick={() => toggleSaveJob(job.id)}
-                    aria-label={savedJobs.has(job.id) ? 'Remove from saved jobs' : 'Save job'}
-                  >
-                    <svg className="save-icon" fill={savedJobs.has(job.id) ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                    </svg>
-                  </button>
-                </div>
 
-                {/* Job Meta */}
-                <div className="job-meta">
-                  <div className={`job-type-badge ${job.type.toLowerCase().replace('-', '-')}`}>
-                    {getJobTypeIcon(job.type)}
-                    <span>{job.type}</span>
+                  {/* Job Meta */}
+                  <div className="job-meta">
+                    <div className={`job-type-badge ${job.type.toLowerCase().replace('-', '-')}`}>
+                      {getJobTypeIcon(job.type)}
+                      <span>{job.type}</span>
+                    </div>
+                    <span className="posted-time">{job.postedTime}</span>
                   </div>
-                  <span className="posted-time">{job.postedTime}</span>
-                </div>
 
-                {/* Salary */}
-                <div className="job-salary">{job.salary}</div>
+                  {/* Salary */}
+                  <div className="job-salary">{job.salary}</div>
 
-                {/* Skills */}
-                <div className="skills-section">
-                  <div className="skills-list">
-                    {job.skills.map((skill, index) => (
-                      <span key={index} className="skill-tag">{skill}</span>
-                    ))}
+                  {/* Skills */}
+                  <div className="skills-section">
+                    <div className="skills-list">
+                      {job.skills.map((skill, index) => (
+                        <span key={index} className="skill-tag">{skill}</span>
+                      ))}
+                    </div>
                   </div>
-                </div>
 
-                {/* Action Buttons */}
-                <div className="job-actions">
-                  <button className="action-button apply-button">
-                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                    </svg>
-                    <span>Apply Now</span>
-                  </button>
-                  <button className="action-button view-button">
-                    View Details
-                  </button>
+                  {/* Action Buttons */}
+                  <div className="job-actions">
+                    <button className="action-button apply-button">
+                      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                      </svg>
+                      <span>Apply Now</span>
+                    </button>
+                    <button className="action-button view-button">
+                      View Details
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
