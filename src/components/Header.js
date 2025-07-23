@@ -6,7 +6,7 @@ const Header = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 10);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -16,198 +16,167 @@ const Header = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  // Embedded Styles
   const styles = `
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    .job-header {
+      font-family: 'Inter', sans-serif;
+      background: #ffffff;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-bottom: 1px solid #f1f5f9;
+    }
+    
+    .job-header.scrolled {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      border-bottom: 1px solid #e2e8f0;
+    }
     
     .header-container {
-      font-family: 'Inter', sans-serif;
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      position: relative;
     }
     
-    .logo-gradient {
-      background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #4338ca 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-size: 200% 200%;
-      animation: gradientShift 3s ease infinite;
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: all 0.2s ease;
     }
     
-    @keyframes gradientShift {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
+    .logo:hover {
+      transform: translateY(-1px);
     }
     
-    .logo-underline {
-      height: 4px;
-      background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-      border-radius: 2px;
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    
-    .logo-container:hover .logo-underline {
-      transform: scaleX(1);
-    }
-    
-    .logo-glow {
-      position: absolute;
-      inset: -8px;
-      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.15));
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
       border-radius: 12px;
-      filter: blur(20px);
-      opacity: 0;
-      transition: opacity 0.5s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 18px;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
     }
     
-    .logo-container:hover .logo-glow {
-      opacity: 1;
+    .logo-text {
+      color: #1e293b;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    
+    .desktop-nav {
+      display: flex;
+      align-items: center;
+      gap: 32px;
     }
     
     .nav-link {
-      position: relative;
-      padding: 8px 4px;
-      font-weight: 600;
-      font-size: 18px;
-      color: #374151;
+      color: #64748b;
       text-decoration: none;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-weight: 500;
+      font-size: 16px;
+      padding: 8px 0;
+      position: relative;
+      transition: all 0.2s ease;
     }
     
     .nav-link:hover {
       color: #3b82f6;
-      transform: translateY(-1px);
     }
     
-    .nav-link::before {
+    .nav-link::after {
       content: '';
       position: absolute;
       bottom: 0;
       left: 0;
       width: 0;
       height: 2px;
-      background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-      border-radius: 1px;
-      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    
-    .nav-link:hover::before {
-      width: 100%;
-    }
-    
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      inset: -8px;
-      background: rgba(59, 130, 246, 0.05);
-      border-radius: 8px;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      z-index: -1;
+      background: #3b82f6;
+      transition: width 0.3s ease;
     }
     
     .nav-link:hover::after {
-      opacity: 1;
+      width: 100%;
+    }
+    
+    .desktop-buttons {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .btn {
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      outline: none;
+    }
+    
+    .btn:focus {
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
     }
     
     .btn-login {
-      color: #6b7280;
-      font-weight: 600;
-      font-size: 18px;
-      padding: 12px 16px;
-      border-radius: 8px;
+      color: #64748b;
       background: transparent;
-      border: none;
-      cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      padding: 10px 16px;
     }
     
     .btn-login:hover {
       color: #3b82f6;
-      background: rgba(59, 130, 246, 0.05);
-      transform: scale(1.05);
+      background: #f8fafc;
     }
     
     .btn-signup {
-      position: relative;
-      border: 2px solid #3b82f6;
       color: #3b82f6;
-      padding: 12px 32px;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 18px;
-      background: transparent;
-      cursor: pointer;
-      overflow: hidden;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    
-    .btn-signup::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: -1;
-    }
-    
-    .btn-signup:hover::before {
-      transform: scaleX(1);
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      padding: 10px 20px;
     }
     
     .btn-signup:hover {
-      color: white;
-      transform: scale(1.05);
-      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+      background: #f8fafc;
+      border-color: #cbd5e1;
+      transform: translateY(-1px);
     }
     
-    .btn-post-job {
-      position: relative;
-      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-      color: white;
-      padding: 12px 32px;
-      border-radius: 50px;
+    .btn-post {
+      color: #ffffff;
+      background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      padding: 12px 24px;
       font-weight: 600;
-      font-size: 18px;
-      border: none;
-      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+      position: relative;
       overflow: hidden;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      display: flex;
-      align-items: center;
-      gap: 8px;
     }
     
-    .btn-post-job::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, #8b5cf6, #4338ca);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    
-    .btn-post-job:hover::before {
-      opacity: 1;
-    }
-    
-    .btn-post-job:hover {
-      transform: scale(1.05);
-      box-shadow: 0 15px 35px rgba(59, 130, 246, 0.4);
-    }
-    
-    .btn-post-job svg {
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    
-    .btn-post-job:hover svg {
-      transform: translateX(4px) scale(1.1);
-    }
-    
-    .btn-post-job::after {
+    .btn-post::before {
       content: '';
       position: absolute;
       top: 0;
@@ -215,60 +184,72 @@ const Header = () => {
       width: 100%;
       height: 100%;
       background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transform: skewX(-12deg);
-      transition: left 0.6s ease;
+      transition: left 0.5s ease;
     }
     
-    .btn-post-job:hover::after {
+    .btn-post:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+    }
+    
+    .btn-post:hover::before {
       left: 100%;
     }
     
     .mobile-menu-btn {
-      width: 40px;
-      height: 40px;
-      display: flex;
+      display: none;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      border-radius: 8px;
+      width: 44px;
+      height: 44px;
       background: transparent;
       border: none;
       cursor: pointer;
-      transition: all 0.3s ease;
+      border-radius: 8px;
+      transition: all 0.2s ease;
     }
     
     .mobile-menu-btn:hover {
-      background: rgba(0, 0, 0, 0.05);
+      background: #f8fafc;
     }
     
-    .mobile-menu-btn span {
-      width: 28px;
+    .hamburger-line {
+      width: 20px;
       height: 2px;
-      background: #374151;
+      background: #64748b;
+      margin: 2px 0;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      margin: 3px 0;
+      border-radius: 1px;
     }
     
-    .mobile-menu-btn.active span:nth-child(1) {
-      transform: rotate(45deg) translateY(8px);
+    .mobile-menu-btn.active .hamburger-line:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
     }
     
-    .mobile-menu-btn.active span:nth-child(2) {
+    .mobile-menu-btn.active .hamburger-line:nth-child(2) {
       opacity: 0;
-      transform: scale(0);
+      transform: translateX(20px);
     }
     
-    .mobile-menu-btn.active span:nth-child(3) {
-      transform: rotate(-45deg) translateY(-8px);
+    .mobile-menu-btn.active .hamburger-line:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -6px);
     }
     
     .mobile-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(8px);
+      background: rgba(15, 23, 42, 0.5);
+      backdrop-filter: blur(4px);
       z-index: 40;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .mobile-overlay.active {
+      opacity: 1;
+      visibility: visible;
     }
     
     .mobile-menu {
@@ -277,30 +258,29 @@ const Header = () => {
       right: 0;
       height: 100vh;
       width: 320px;
-      background: white;
-      box-shadow: -10px 0 50px rgba(0, 0, 0, 0.3);
+      background: #ffffff;
       z-index: 50;
       transform: translateX(100%);
-      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: -10px 0 50px rgba(0, 0, 0, 0.1);
     }
     
     .mobile-menu.open {
       transform: translateX(0);
     }
     
-    .mobile-menu-content {
-      padding: 32px;
-      padding-top: 96px;
+    .mobile-content {
+      padding: 80px 24px 24px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
     }
     
     .mobile-logo {
-      font-size: 24px;
-      font-weight: 700;
-      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 40px;
     }
     
     .mobile-nav {
@@ -310,99 +290,79 @@ const Header = () => {
       margin-bottom: 40px;
     }
     
-    .mobile-nav a {
-      font-size: 20px;
-      font-weight: 600;
-      color: #374151;
+    .mobile-nav-link {
+      color: #1e293b;
       text-decoration: none;
-      padding-bottom: 16px;
-      border-bottom: 1px solid #f3f4f6;
-      transition: all 0.3s ease;
+      font-weight: 500;
+      font-size: 18px;
+      padding: 12px 0;
+      border-bottom: 1px solid #f1f5f9;
+      transition: all 0.2s ease;
     }
     
-    .mobile-nav a:hover {
+    .mobile-nav-link:hover {
       color: #3b82f6;
-      border-bottom-color: #bfdbfe;
     }
     
     .mobile-buttons {
       display: flex;
       flex-direction: column;
       gap: 16px;
+      margin-top: auto;
+    }
+    
+    .mobile-btn {
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      font-size: 16px;
+      padding: 16px 24px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
     }
     
     .mobile-btn-login {
-      color: #6b7280;
-      font-weight: 600;
-      font-size: 18px;
-      padding: 12px 16px;
-      text-align: left;
-      background: transparent;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    
-    .mobile-btn-login:hover {
-      color: #3b82f6;
-      background: rgba(59, 130, 246, 0.05);
+      color: #64748b;
+      background: #f8fafc;
     }
     
     .mobile-btn-signup {
-      border: 2px solid #3b82f6;
       color: #3b82f6;
-      padding: 16px 32px;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 18px;
-      background: transparent;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    
-    .mobile-btn-signup:hover {
-      background: rgba(59, 130, 246, 0.05);
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
     }
     
     .mobile-btn-post {
-      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-      color: white;
-      padding: 16px 32px;
-      border-radius: 50px;
+      color: #ffffff;
+      background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
       font-weight: 600;
-      font-size: 18px;
-      border: none;
-      cursor: pointer;
-      transition: all 0.3s ease;
     }
     
-    .mobile-btn-post:hover {
-      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+    @media (max-width: 768px) {
+      .desktop-nav,
+      .desktop-buttons {
+        display: none;
+      }
+      
+      .mobile-menu-btn {
+        display: flex;
+      }
+      
+      .header-container {
+        padding: 12px 20px;
+      }
+      
+      .logo-text {
+        font-size: 20px;
+      }
     }
     
-    .header-scrolled {
-      background: rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(20px);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    }
-    
-    .header-normal {
-      background: white;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    }
-    
-    @media (max-width: 1024px) {
-      .desktop-nav { display: none; }
-      .desktop-buttons { display: none; }
-      .mobile-menu-btn { display: flex; }
-    }
-    
-    @media (min-width: 1025px) {
-      .mobile-menu-btn { display: none; }
-      .mobile-overlay { display: none; }
-      .mobile-menu { display: none; }
+    @media (max-width: 480px) {
+      .mobile-menu {
+        width: 100%;
+      }
     }
   `;
 
@@ -410,77 +370,82 @@ const Header = () => {
     <>
       <style>{styles}</style>
       
-      <header 
-        className={`header-container fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
-          isScrolled ? 'header-scrolled' : 'header-normal'
-        }`}
-      >
-        <div style={{ maxWidth: '1280px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 24px' }}>
-          
-          {/* Enhanced Logo */}
-          <div className="logo-container" style={{ position: 'relative', cursor: 'pointer' }}>
-            <div className="logo-gradient" style={{ fontSize: '32px', fontWeight: '900' }}>
-              JobHunt
-            </div>
-            <div className="logo-underline" style={{ position: 'absolute', bottom: '-4px', left: '0', width: '100%' }}></div>
-            <div className="logo-glow"></div>
-          </div>
+      <header className={`job-header fixed top-0 left-0 right-0 z-30 ${isScrolled ? 'scrolled' : ''}`}>
+        <div className="header-container">
+          {/* Logo */}
+          <a href="#" className="logo">
+            <div className="logo-icon">J</div>
+            <span className="logo-text">JobHunt</span>
+          </a>
 
           {/* Desktop Navigation */}
-          <nav className="desktop-nav" style={{ display: 'flex', gap: '40px' }}>
+          <nav className="desktop-nav">
             <a href="#" className="nav-link">Find Jobs</a>
             <a href="#" className="nav-link">For Companies</a>
           </nav>
 
           {/* Desktop Buttons */}
-          <div className="desktop-buttons" style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-            <button className="btn-login">Log in</button>
-            <button className="btn-signup">Sign up</button>
-            <button className="btn-post-job">
-              Post a Job
-              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-              </svg>
-            </button>
+          <div className="desktop-buttons">
+            <button className="btn btn-login">Log in</button>
+            <button className="btn btn-signup">Sign up</button>
+            <button className="btn btn-post">Post a Job</button>
           </div>
 
           {/* Mobile Menu Button */}
           <button 
-            onClick={toggleMobileMenu}
             className={`mobile-menu-btn ${isMobileMenuOpen ? 'active' : ''}`}
+            onClick={toggleMobileMenu}
+            aria-label="Toggle menu"
           >
-            <span></span>
-            <span></span>
-            <span></span>
+            <div className="hamburger-line"></div>
+            <div className="hamburger-line"></div>
+            <div className="hamburger-line"></div>
           </button>
         </div>
       </header>
 
-      {/* Mobile Menu Overlay */}
-      {isMobileMenuOpen && (
-        <div className="mobile-overlay" onClick={toggleMobileMenu}></div>
-      )}
+      {/* Mobile Overlay */}
+      <div 
+        className={`mobile-overlay ${isMobileMenuOpen ? 'active' : ''}`}
+        onClick={toggleMobileMenu}
+      />
 
       {/* Mobile Menu */}
       <div className={`mobile-menu ${isMobileMenuOpen ? 'open' : ''}`}>
-        <div className="mobile-menu-content">
-          <div className="mobile-logo">JobHunt</div>
+        <div className="mobile-content">
+          {/* Mobile Logo */}
+          <div className="mobile-logo">
+            <div className="logo-icon">J</div>
+            <span className="logo-text">JobHunt</span>
+          </div>
           
+          {/* Mobile Navigation */}
           <nav className="mobile-nav">
-            <a href="#" onClick={toggleMobileMenu}>Find Jobs</a>
-            <a href="#" onClick={toggleMobileMenu}>For Companies</a>
+            <a href="#" className="mobile-nav-link" onClick={toggleMobileMenu}>
+              Find Jobs
+            </a>
+            <a href="#" className="mobile-nav-link" onClick={toggleMobileMenu}>
+              For Companies
+            </a>
           </nav>
 
+          {/* Mobile Buttons */}
           <div className="mobile-buttons">
-            <button className="mobile-btn-login" onClick={toggleMobileMenu}>Log in</button>
-            <button className="mobile-btn-signup" onClick={toggleMobileMenu}>Sign up</button>
-            <button className="mobile-btn-post" onClick={toggleMobileMenu}>Post a Job</button>
+            <button className="mobile-btn mobile-btn-login" onClick={toggleMobileMenu}>
+              Log in
+            </button>
+            <button className="mobile-btn mobile-btn-signup" onClick={toggleMobileMenu}>
+              Sign up
+            </button>
+            <button className="mobile-btn mobile-btn-post" onClick={toggleMobileMenu}>
+              Post a Job
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Spacer */}
-      <div style={{ height: '96px' }}></div>
+      {/* Header Spacer */}
+      <div style={{ height: '80px' }} />
     </>
   );
 };
