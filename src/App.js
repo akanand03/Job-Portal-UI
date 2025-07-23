@@ -2,6 +2,9 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import FeaturedJobs from './components/FeaturedJobs';
 import HowItWorks from './components/HowItWorks';
+import TopCompanies from './components/TopCompanies';
+import Footer from './components/Footer';
+
 
 function App() {
   return (
@@ -10,6 +13,9 @@ function App() {
       <Hero />
       <FeaturedJobs />
       <HowItWorks />
+      <TopCompanies />
+      <Footer />
+
     </div>
   );
 }
