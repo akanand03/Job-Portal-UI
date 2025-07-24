@@ -1,114 +1,118 @@
 # 💼 Job Portal UI – Frontend Assignment
 
-A responsive and feature-rich Job Portal UI built using **React**, **Vite**, and **Material-UI (MUI)**. This project emulates a modern, scalable job search platform, inspired by the [Dribbble design by MindInventory](https://dribbble.com/shots/20254545-Job-Portal-Website), and extends it with dynamic interactions, UX-enhancing animations, and professional-grade components.
+This is a responsive and interactive job portal UI built using **React**, **Vite**, and **Material UI (MUI)**. It includes key features such as job listings, smart filters, and a mobile-first responsive layout.
+
+---
+
+## 📁 Project Structure
+
+```
+job-hunt-assignment/
+└── job-portal-ui/
+    ├── node_modules/
+    ├── public/
+    ├── src/
+    │   ├── components/
+    │   │   ├── FeaturedJobs.js
+    │   │   ├── Footer.js
+    │   │   ├── Header.js
+    │   │   ├── Hero.js
+    │   │   ├── HowItWorks.js
+    │   │   └── TopCompanies.js
+    │   ├── data/
+    │   │   └── jobs.json
+    │   ├── App.css
+    │   ├── App.js
+    │   ├── App.test.js
+    │   ├── index.css
+    │   ├── index.js
+    │   ├── logo.svg
+    │   ├── reportWebVitals.js
+    │   └── setupTests.js
+    ├── .gitignore
+    ├── package-lock.json
+    ├── package.json
+    ├── vite.config.js
+    └── README.md
+```
 
 ---
 
 ## 🛠 Tech Stack
 
-- ⚛ React (Vite)
-- 🎨 Material-UI (MUI)
-- 📦 Local JSON for mock data
-- 📱 Fully Responsive Layout (Mobile-first design)
-- 🧠 Custom filtering, search, interactivity
+- ⚛ React + Vite
+- 🎨 Material UI (MUI)
+- 📁 Modular File Structure
+- 📄 Local JSON (jobs.json)
+- 🧱 Component-Driven Architecture
+- 📱 Fully Responsive Layout
 
 ---
 
-## 🎯 Features Implemented
+## 🚀 Getting Started
 
-### ✅ Core UI Sections
-- **Advanced Header Navigation**
-  - Sticky AppBar with dynamic shadow on scroll
-  - Multi-level menus with `Menu`, `ExpandMore`, and contextual icons
-  - CTA buttons: Log in, Sign up, Post a Job
-
-- **Hero Section with Smart Search**
-  - Intuitive search bar with autocomplete and icon adornments
-  - Live keyword filtering across title, company & skills
-  - Suggested tags for fast browsing
-
-- **Featured Jobs Section**
-  - Professionally designed job cards with:
-    - Company logo, job title, location, and salary
-    - Smart badges (e.g., `URGENT`, `FEATURED`, `HOT`)
-    - Progress bar for applicants
-    - Save/Unsave jobs with stateful favorite toggle
-    - View tracking with incrementing counters
-    - Tooltip-enabled icon actions for Share, Compare, Bookmark
-  - Trust-building metric dashboard (Jobs, Companies, Success Rate)
-
-- **How It Works Section**
-  - Fully animated 4-step flow using MUI Cards + Icons
-  - Zoom transitions for each step with icons and description
-  - Emphasis on simplicity + effectiveness
-
-- **Footer Section**
-  - Brand stats, multi-column layout, newsletter subscription
-  - Contact info, social links, and responsive stack
-  - CSS-in-JS styling with layered gradient effects and mobile responsiveness
-
----
-
-### 🌟 Enhanced UX Features
-- 📈 Stats Dashboard
-  - Realtime filtering & dashboard updates across Featured, Remote, and Urgent jobs
-- 🔍 Search Functionality
-  - Smart search with fuzzy match logic and searchQuery state management
-- 📱 Mobile Optimization
-  - Responsive MUI `Drawer` for mobile nav with seamless toggles
-- 💌 Save & Notify
-  - Toast-style `Snackbar` alerts when saving/removing jobs
-- 🎨 Smooth Animations
-  - Hover lifts, zoom on card entry, subtle shadows, badge pulses
-
----
-
-## 📁 Folder Structure
-
-```
-src/
-├── components/
-│   ├── Header.js
-│   ├── Hero.js
-│   ├── FeaturedJobs.js
-│   ├── HowItWorks.js
-│   ├── Footer.js
-├── data/
-│   └── jobs.json
-├── App.js
-├── main.js
-```
-
----
-
-## ⚙️ Getting Started Locally
+### 1. Clone the Repository
 
 ```bash
-# Clone the repository
 git clone https://github.com/akanand03/Job-Portal-UI.git
-cd job-portal-ui
+cd job-hunt-assignment/job-portal-ui
+```
 
-# Install dependencies
+### 2. Install Dependencies
+
+```bash
 npm install
+```
 
-# Run the development server
+### 3. Start the Development Server
+
+```bash
 npm start
 ```
 
----
-
-## 🤝 Acknowledgements
-
-- UI Design: [MindInventory - Dribbble](https://dribbble.com/shots/20254545-Job-Portal-Website)
-- UI Library: [Material UI](https://mui.com)
-- Icon System: [MUI Icons](https://mui.com/components/material-icons/)
-- Animations & Effects: MUI Transitions, Snackbar, Tooltip, Grid System
+App will be running at: [http://localhost:5173](http://localhost:5173)
 
 ---
 
+## 📦 Build for Production
+
+```bash
+npm run build
+```
+
+To preview production locally:
+
+```bash
+npm run preview
+```
+
+---
+
+## 🔍 Key Components
+
+- `Header.js` – Navigation bar with branding and action buttons
+- `Hero.js` – Search interface for job queries
+- `FeaturedJobs.js` – Job card grid with badges, progress bars, and actions
+- `TopCompanies.js` – Showcase trusted companies
+- `HowItWorks.js` – Visual steps on using the platform
+- `Footer.js` – Organized footer section with links and newsletter
+- `jobs.json` – Static job listing data
+
+---
+
+## 🤹 Enhancements
+
+- Save job functionality using `useState`
+- Live filtering/search on job data
+- Category icons with tooltips
+- Responsive drawer nav for mobile
+- Hover and transition animations
+- Progress indicators on job listings
+
+---
 ## 👨‍💻 Author
 
 **Akshit Anand**  
-🚀 Passionate about building scalable, user-centric web applications
+🚀 Passionate about building sleek, scalable UI systems
 
 ---
