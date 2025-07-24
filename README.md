@@ -5,8 +5,10 @@ A responsive and feature-rich Job Portal UI built using **React**, **Vite**, and
 ---
 
 ## 🚀 Live Demo
+🔗 [Click to View Deployment](https://your-live-link.vercel.app) — let's groove!  
+![dancing](https://media.giphy.com/media/3o6ZsY8VgmEG0/giphy.gif)
 
-🔗 [Click to View Deployment](https://your-live-link.vercel.app)
+
 
 ---
 
