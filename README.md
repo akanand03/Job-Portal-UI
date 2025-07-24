@@ -4,13 +4,6 @@ A responsive and feature-rich Job Portal UI built using **React**, **Vite**, and
 
 ---
 
-## 🚀 Live Demo
-🔗 [Click to View Deployment](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdTFoajk1eXhneTV4ZzJ5enRmdDZmdGdmbTZrcnJoMDkxZ3F6M25vbiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/jTnGaiuxvvDNK/giphy.gif) 
-
-
-
----
-
 ## 🛠 Tech Stack
 
 - ⚛ React (Vite)
